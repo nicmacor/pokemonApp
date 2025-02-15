@@ -104,8 +104,7 @@ Para instalarlas:
 ```bash
 flutter pub get
 ```
-
-```
+---
 
 ## 🚀 **¡Listo para Usar!**
 🔥 Ahora puedes clonar, instalar y ejecutar la aplicación sin problemas.  
