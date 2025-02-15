@@ -6,13 +6,15 @@ import '../providers/auth_provider.dart';
 import '../screens/login_screen.dart';
 import '../screens/favorites_screen.dart';
 
-// Pantalla principal, pantalla con la lista del pokemon
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController _searchController = TextEditingController();
+  String searchQuery = "";
+
   @override
   void initState() {
     super.initState();
@@ -24,23 +26,25 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final pokemonProvider = Provider.of<PokemonProvider>(context);
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pokémon List'),
+        title: Text(
+          'Pokémon List',
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
         actions: [
-          // Menu desplegable para las opciones del usuario
+          // Menú desplegable del usuario
           PopupMenuButton<String>(
-            icon: Icon(Icons.account_circle), // Ícono de usuario
+            icon: Icon(Icons.account_circle, size: 30), // Ícono más grande
             onSelected: (String result) {
               if (result == 'favorites') {
                 Navigator.push(
-                  //Navega a pantalla favoritos
                   context,
                   MaterialPageRoute(builder: (context) => FavoritesScreen()),
                 );
               } else if (result == 'logout') {
-                //Cierra sesion y dirige al log in, quita token
                 Provider.of<AuthProvider>(context, listen: false).logout();
                 Navigator.pushReplacement(
                   context,
@@ -50,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             itemBuilder:
                 (BuildContext context) => <PopupMenuEntry<String>>[
-                  // Favoritos
                   PopupMenuItem<String>(
                     value: 'favorites',
                     child: ListTile(
@@ -58,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: Text('Ver Favoritos'),
                     ),
                   ),
-                  // Logout
                   PopupMenuItem<String>(
                     value: 'logout',
                     child: ListTile(
@@ -70,38 +72,97 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      // Cuerpo de pantalla, La lista el pokemon
-      body:
-          pokemonProvider.isLoading
-              ? Center(child: CircularProgressIndicator())
-              : pokemonProvider.errorMessage.isNotEmpty
-              ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      pokemonProvider.errorMessage,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red, fontSize: 18),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () => pokemonProvider.fetchPokemon(),
-                      child: Text("Reintentar"),
-                    ),
-                  ],
+
+      // Fondo con gradiente
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.red.shade200, Colors.white],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Column(
+          children: [
+            // Barra de búsqueda
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: "Buscar Pokémon...",
+                  prefixIcon: Icon(Icons.search, color: Colors.grey),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                onChanged: (query) {
+                  setState(() {
+                    searchQuery = query.toLowerCase();
+                  });
+                },
+              ),
+            ),
+
+            // Si está cargando, muestra el indicador de progreso
+            if (pokemonProvider.isLoading)
+              Expanded(child: Center(child: CircularProgressIndicator()))
+            else if (pokemonProvider.errorMessage.isNotEmpty)
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        pokemonProvider.errorMessage,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.red, fontSize: 18),
+                      ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () => pokemonProvider.fetchPokemon(),
+                        child: Text("Reintentar"),
+                      ),
+                    ],
+                  ),
                 ),
               )
-              : ListView.builder(
-                itemCount: pokemonProvider.pokemonList.length,
-                itemBuilder: (context, index) {
-                  final pokemon = pokemonProvider.pokemonList[index];
-                  return Card(
-                    child: ListTile(
-                      leading: Image.network(pokemon.imageUrl),
-                      title: Text(pokemon.name.toUpperCase()),
+            else
+              Expanded(
+                child: GridView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  itemCount:
+                      pokemonProvider.pokemonList
+                          .where(
+                            (pokemon) => pokemon.name.toLowerCase().contains(
+                              searchQuery,
+                            ),
+                          )
+                          .length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount:
+                        screenWidth > 600
+                            ? 3
+                            : 2, // 2 columnas en móvil, 3 en pantallas grandes
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.9,
+                  ),
+                  itemBuilder: (context, index) {
+                    final filteredList =
+                        pokemonProvider.pokemonList
+                            .where(
+                              (pokemon) => pokemon.name.toLowerCase().contains(
+                                searchQuery,
+                              ),
+                            )
+                            .toList();
+                    final pokemon = filteredList[index];
+
+                    return GestureDetector(
                       onTap: () {
-                        //Al seleccionar dirige a pantalla detalles
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -111,10 +172,33 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                    ),
-                  );
-                },
+                      child: Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.network(pokemon.imageUrl, height: 80),
+                            SizedBox(height: 10),
+                            Text(
+                              pokemon.name.toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
+          ],
+        ),
+      ),
     );
   }
 }

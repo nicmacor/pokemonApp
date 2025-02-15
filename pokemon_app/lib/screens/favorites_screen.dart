@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
+import 'detail_screen.dart'; // Importa la pantalla de detalles
 
-// Pantalla que muestra los pokemon favoritos del usuario
+// Pantalla que muestra los Pokémon favoritos del usuario con mejor UI
 class FavoritesScreen extends StatefulWidget {
   @override
   _FavoritesScreenState createState() => _FavoritesScreenState();
@@ -15,10 +16,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   void initState() {
     super.initState();
-    _loadFavorites(); // Carga los pokemones favoritos
+    _loadFavorites(); // Cargar los Pokémon favoritos
   }
 
-  // Metodo para obtener los favoritos
+  // Método para obtener los favoritos con manejo de errores
   Future<void> _loadFavorites() async {
     final apiService = ApiService();
     try {
@@ -35,43 +36,107 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     }
   }
 
-  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Pokémon Favoritos')),
-      body:
-          isLoading
-              ? Center(child: CircularProgressIndicator())
-              //Si no se carga los pokemon favoritos, error de consumir la api
-              : errorMessage.isNotEmpty
-              ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      errorMessage,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red, fontSize: 18),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: _loadFavorites,
-                      child: Text("Reintentar"),
-                    ),
-                  ],
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child:
+            isLoading
+                ? Center(child: CircularProgressIndicator())
+                : errorMessage.isNotEmpty
+                ? _buildErrorWidget()
+                : favorites.isEmpty
+                ? _buildEmptyFavoritesWidget()
+                : _buildFavoritesList(),
+      ),
+    );
+  }
+
+  // 🔹 Widget para mostrar mensaje de error con un botón de reintento
+  Widget _buildErrorWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.error, color: Colors.red, size: 50),
+          SizedBox(height: 10),
+          Text(
+            errorMessage,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.red, fontSize: 18),
+          ),
+          SizedBox(height: 15),
+          ElevatedButton(
+            onPressed: _loadFavorites,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
+            child: Text("Reintentar", style: TextStyle(fontSize: 16)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 🔹 Widget para mostrar cuando no hay Pokémon favoritos
+  Widget _buildEmptyFavoritesWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.favorite_border, color: Colors.grey, size: 50),
+          SizedBox(height: 10),
+          Text(
+            "No tienes Pokémon favoritos",
+            style: TextStyle(fontSize: 18, color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 🔹 Widget para mostrar la lista de Pokémon favoritos con tarjetas visuales
+  Widget _buildFavoritesList() {
+    return ListView.builder(
+      itemCount: favorites.length,
+      itemBuilder: (context, index) {
+        return Card(
+          elevation: 4,
+          margin: EdgeInsets.symmetric(vertical: 8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.catching_pokemon,
+              color: Colors.orange,
+              size: 30,
+            ),
+            title: Text(
+              favorites[index].toUpperCase(),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.grey,
+              size: 18,
+            ),
+            onTap: () {
+              // Al hacer clic en un Pokémon, ir a la pantalla de detalles
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => DetailScreen(pokemonName: favorites[index]),
                 ),
-              )
-              : favorites.isEmpty
-              // Mensaje si no hay pokemon favoritos
-              ? Center(child: Text('No tienes Pokémon favoritos'))
-              // Lista de pokemon favoritos
-              : ListView.builder(
-                itemCount: favorites.length,
-                itemBuilder: (context, index) {
-                  return ListTile(title: Text(favorites[index]));
-                },
-              ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
