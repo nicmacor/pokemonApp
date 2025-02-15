@@ -21,7 +21,8 @@ pokemonApp/               # 📂 Repositorio principal
 │── backend/               # 📂 Backend en Flask
 │   ├── app.py             # 🔥 Archivo principal del backend
 │   ├── instances
-│      ├── pokemon.db             
+│      ├── pokemon.db
+│   ├── requirements.txt            
 │── pokemon_app/           # 📂 Aplicación Flutter
 │   ├── lib/               # 📂 Código de la app
 │   ├── pubspec.yaml       # 📝 Dependencias de Flutter
@@ -42,17 +43,11 @@ pokemonApp/               # 📂 Repositorio principal
 ### 🏢 **Backend (Flask)**
 🔹 **Clona el repositorio:**
 ```bash
-git clone https://github.com/TU-USUARIO/pokemon-app.git
+git clone https://github.com/nicmacor/pokemonApp.git
 ```
 🔹 **Accede a la carpeta del backend:**
 ```bash
-cd pokemon-app/backend
-```
-🔹 **Crea un entorno virtual y actívalo:**
-```bash
-python -m venv venv
-source venv/bin/activate  # Mac/Linux
-venv\Scripts\activate     # Windows
+cd pokemonApp/backend
 ```
 🔹 **Instala las dependencias:**
 ```bash
@@ -109,20 +104,6 @@ Para instalarlas:
 ```bash
 flutter pub get
 ```
-
----
-
-## 🌟 **Contribuciones**
-1. **Haz un fork del repositorio.**
-2. **Crea una nueva rama para tu cambio.**
-3. **Realiza un pull request explicando tus mejoras.**
-
----
-
-## 🔍 **Contacto**
-Si tienes preguntas o sugerencias, puedes contactarme en **[tu email o redes sociales]**.
-
----
 
 ## 🚀 **¡Listo para Usar!**
 🔥 Ahora puedes clonar, instalar y ejecutar la aplicación sin problemas.  
