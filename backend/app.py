@@ -52,7 +52,7 @@ def register():
     
     # Verificar si la cédula ya está registrada
     if User.query.get(cedula):
-        return jsonify({"error": "La cédula ya está registrada"}), 400
+        return jsonify({"error": "La cédula ya está registrada"}), 409
     
     # Verificar que todos los campos esten llenos
     if not username or not password or not cedula:
