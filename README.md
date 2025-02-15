@@ -17,16 +17,11 @@ Una aplicación móvil desarrollada en **Flutter** que consume datos de **PokeAP
 ## 📂 Estructura del Proyecto
 
 ```
-pokemon-app/               # 📂 Repositorio principal
+pokemonApp/               # 📂 Repositorio principal
 │── backend/               # 📂 Backend en Flask
 │   ├── app.py             # 🔥 Archivo principal del backend
-│   ├── requirements.txt   # 📝 Dependencias del backend
-│   ├── database/          # 📂 Archivos de la base de datos
-│   ├── routes/            # 📂 Rutas de la API
-│   ├── models/            # 📂 Modelos de la base de datos
-│   ├── .gitignore         # 📝 Ignorar archivos innecesarios
-│   ├── README.md          # 📝 Documentación del backend
-│
+│   ├── instances
+│      ├── pokemon.db             
 │── pokemon_app/           # 📂 Aplicación Flutter
 │   ├── lib/               # 📂 Código de la app
 │   ├── pubspec.yaml       # 📝 Dependencias de Flutter
