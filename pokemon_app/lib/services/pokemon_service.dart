@@ -9,7 +9,7 @@ class PokemonService {
   // Método para obtener la lista de Pokémon
   Future<List<Pokemon>> fetchPokemonList() async {
     try {
-      final response = await _dio.get(_baseUrl);
+      final response = await _dio.get("$_baseUrl?limit=100");
       List results = response.data['results'];
       List<Pokemon> pokemonList = [];
       // Iterar sobre resultados para obtener detalles de los pokemones
@@ -19,11 +19,9 @@ class PokemonService {
       }
 
       return pokemonList;
-    } on DioException catch (e) {
-      print("Error de conexión: ${e.message}");
+    } on DioException {
       throw Exception("Error al obtener la lista de Pokémon");
     } catch (e) {
-      print("Error desconocido: $e");
       throw Exception("Error inesperado al obtener la lista de Pokémon.");
     }
   }
@@ -39,13 +37,11 @@ class PokemonService {
       List<String> evolutions = _parseEvolutionChain(evolutionResponse.data);
 
       return Pokemon.fromJson(response.data, evolutions);
-    } on DioException catch (e) {
-      print("Error de conexión al obtener detalles: ${e.message}");
+    } on DioException {
       throw Exception(
         "No se pudo obtener los detalles del Pokémon. Verifica tu conexión.",
       );
     } catch (e) {
-      print("Error inesperado al obtener detalles: $e");
       throw Exception("Error desconocido al obtener detalles del Pokémon.");
     }
   }
