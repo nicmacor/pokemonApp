@@ -17,16 +17,12 @@ Una aplicación móvil desarrollada en **Flutter** que consume datos de **PokeAP
 ## 📂 Estructura del Proyecto
 
 ```
-pokemon-app/               # 📂 Repositorio principal
+pokemonApp/               # 📂 Repositorio principal
 │── backend/               # 📂 Backend en Flask
 │   ├── app.py             # 🔥 Archivo principal del backend
-│   ├── requirements.txt   # 📝 Dependencias del backend
-│   ├── database/          # 📂 Archivos de la base de datos
-│   ├── routes/            # 📂 Rutas de la API
-│   ├── models/            # 📂 Modelos de la base de datos
-│   ├── .gitignore         # 📝 Ignorar archivos innecesarios
-│   ├── README.md          # 📝 Documentación del backend
-│
+│   ├── instances
+│      ├── pokemon.db
+│   ├── requirements.txt            
 │── pokemon_app/           # 📂 Aplicación Flutter
 │   ├── lib/               # 📂 Código de la app
 │   ├── pubspec.yaml       # 📝 Dependencias de Flutter
@@ -47,17 +43,11 @@ pokemon-app/               # 📂 Repositorio principal
 ### 🏢 **Backend (Flask)**
 🔹 **Clona el repositorio:**
 ```bash
-git clone https://github.com/TU-USUARIO/pokemon-app.git
+git clone https://github.com/nicmacor/pokemonApp.git
 ```
 🔹 **Accede a la carpeta del backend:**
 ```bash
-cd pokemon-app/backend
-```
-🔹 **Crea un entorno virtual y actívalo:**
-```bash
-python -m venv venv
-source venv/bin/activate  # Mac/Linux
-venv\Scripts\activate     # Windows
+cd pokemonApp/backend
 ```
 🔹 **Instala las dependencias:**
 ```bash
@@ -114,19 +104,6 @@ Para instalarlas:
 ```bash
 flutter pub get
 ```
-
----
-
-## 🌟 **Contribuciones**
-1. **Haz un fork del repositorio.**
-2. **Crea una nueva rama para tu cambio.**
-3. **Realiza un pull request explicando tus mejoras.**
-
----
-
-## 🔍 **Contacto**
-Si tienes preguntas o sugerencias, puedes contactarme en **[tu email o redes sociales]**.
-
 ---
 
 ## 🚀 **¡Listo para Usar!**
