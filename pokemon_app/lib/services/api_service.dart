@@ -25,8 +25,11 @@ class ApiService {
       } else {
         return response.data["error"];
       }
-    } on DioException {
-      return "El usuario ya está registrado.";
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data["error"] != null) {
+        return e.response?.data["error"];
+      }
+      return "No se pudo conectar al servidor. Verifica tu conexión.";
     } catch (e) {
       return "Error inesperado al registrar el usuario.";
     }
