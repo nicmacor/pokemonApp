@@ -43,8 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Logo de la app
                   Image.asset(
                     "assets/pokeball.png",
-                    width: 300, // Ajusta el tamaño aquí
-                    height: 300, // Ajusta el tamaño aquí
+                    width: 300,
+                    height: 300,
                     fit: BoxFit.contain,
                   ),
                   SizedBox(height: 20),

@@ -67,7 +67,7 @@ class _DetailScreenState extends State<DetailScreen> {
             padding: EdgeInsets.all(20),
             child: Image.network(
               pokemon.imageUrl,
-              width: screenWidth * 0.4, // 40% del ancho de la pantalla
+              width: screenWidth * 0.4,
               height: screenWidth * 0.4,
               fit: BoxFit.contain,
             ),
@@ -82,7 +82,7 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
           SizedBox(height: 15),
 
-          // Tarjeta de Tipos (Centrada)
+          // Tarjeta de Tipos
           _buildCenteredCard(
             "Tipos",
             Wrap(
@@ -100,7 +100,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ),
 
-          // Tarjeta de Habilidades (Centrada)
+          // Tarjeta de Habilidades
           _buildCenteredCard(
             "Habilidades",
             Column(
@@ -118,7 +118,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ),
 
-          // Tarjeta de Estadísticas (Centrada)
+          // Tarjeta de Estadísticas
           _buildCenteredCard(
             "Estadísticas",
             Column(
@@ -136,7 +136,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ),
 
-          // Tarjeta de Evoluciones (Centrada)
+          // Tarjeta de Evoluciones
           _buildCenteredCard(
             "Evoluciones",
             Wrap(

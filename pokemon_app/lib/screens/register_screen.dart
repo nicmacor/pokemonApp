@@ -21,7 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    final size = MediaQuery.of(context).size; // Obtener tamaño de la pantalla
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -42,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo o imagen decorativa
+                  // Logo
                   Image.asset("assets/pokeball.png", height: 300, width: 300),
                   SizedBox(height: 10),
 

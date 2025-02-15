@@ -56,7 +56,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  // 🔹 Widget para mostrar mensaje de error con un botón de reintento
+  // Widget para mostrar mensaje de error con un botón de reintento
   Widget _buildErrorWidget() {
     return Center(
       child: Column(
@@ -83,7 +83,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  // 🔹 Widget para mostrar cuando no hay Pokémon favoritos
+  // Widget para mostrar cuando no hay Pokémon favoritos
   Widget _buildEmptyFavoritesWidget() {
     return Center(
       child: Column(
@@ -100,7 +100,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  // 🔹 Widget para mostrar la lista de Pokémon favoritos con tarjetas visuales
+  // Widget para mostrar la lista de Pokémon favoritos con tarjetas visuales
   Widget _buildFavoritesList() {
     return ListView.builder(
       itemCount: favorites.length,

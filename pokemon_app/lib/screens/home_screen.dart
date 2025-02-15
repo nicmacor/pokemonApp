@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           // Menú desplegable del usuario
           PopupMenuButton<String>(
-            icon: Icon(Icons.account_circle, size: 30), // Ícono más grande
+            icon: Icon(Icons.account_circle, size: 30),
             onSelected: (String result) {
               if (result == 'favorites') {
                 Navigator.push(
