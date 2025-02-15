@@ -5,6 +5,8 @@ import 'login_screen.dart';
 
 // Pantalla de Registro de usuarios con diseño atractivo y responsivo
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }

@@ -26,7 +26,7 @@ class ApiService {
         return response.data["error"];
       }
     } on DioException {
-      return "No se pudo conectar al servidor. Verifica tu conexión.";
+      return "El usuario ya está registrado.";
     } catch (e) {
       return "Error inesperado al registrar el usuario.";
     }

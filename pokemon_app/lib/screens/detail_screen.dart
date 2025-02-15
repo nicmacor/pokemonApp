@@ -7,7 +7,7 @@ import '../providers/auth_provider.dart';
 class DetailScreen extends StatefulWidget {
   final String pokemonName;
 
-  DetailScreen({required this.pokemonName});
+  const DetailScreen({super.key, required this.pokemonName});
 
   @override
   _DetailScreenState createState() => _DetailScreenState();

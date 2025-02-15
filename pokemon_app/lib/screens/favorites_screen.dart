@@ -4,6 +4,8 @@ import 'detail_screen.dart'; // Importa la pantalla de detalles
 
 // Pantalla que muestra los Pokémon favoritos del usuario con mejor UI
 class FavoritesScreen extends StatefulWidget {
+  const FavoritesScreen({super.key});
+
   @override
   _FavoritesScreenState createState() => _FavoritesScreenState();
 }

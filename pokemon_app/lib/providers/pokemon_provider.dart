@@ -57,8 +57,6 @@ class PokemonProvider with ChangeNotifier {
       fetchPokemonDetails(
         nextEvolutionName,
       ); //Obtiene los detalles de la evolucion
-    } else {
-      print("Este Pokémon no puede evolucionar más.");
     }
   }
 }
